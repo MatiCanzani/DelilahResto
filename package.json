@@ -1,26 +1,30 @@
 {
   "name": "delilahresto",
   "version": "0.0.1",
-  "description": "pedidos para restaurante",
+  "description": "App pedidos restaurante",
   "main": "index.js",
+  "dependencies": {
+    "bcrypt": "^5.0.0",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mysql2": "^2.1.0",
+    "nodemon": "^2.0.4",
+    "sequelize": "^6.2.3"
+  },
+  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://gitlab.com/MatiCanzani/server-restoo.git"
+    "url": "git+https://github.com/MatiCanzani/DelilahResto.git"
   },
-  "author": "Matias Canzani",
+  "author": "Mati Canzani",
   "license": "ISC",
   "bugs": {
-    "url": "https://gitlab.com/MatiCanzani/server-restoo/issues"
+    "url": "https://github.com/MatiCanzani/DelilahResto/issues"
   },
-  "homepage": "https://gitlab.com/MatiCanzani/server-restoo#readme",
-  "dependencies": {
-    "body-parser": "^1.19.0",
-    "express": "^4.17.1",
-    "jsonwebtoken": "^8.5.1",
-    "mysql2": "^2.1.0",
-    "sequelize": "^6.1.0"
-  }
+  "homepage": "https://github.com/MatiCanzani/DelilahResto#readme"
 }
