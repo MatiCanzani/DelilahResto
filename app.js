@@ -8,6 +8,9 @@ const userRouters = require('./api/routes/user.js')
 const loginRouter = require('./api/routes/login')
 const auntenticateRouter = require('./api/routes/verify.js')
 
+app.get('/', (req,res) => {
+    res.send('Bienvenido a mi primer API')
+});
 app.use(bodyParser.json(), cors(),);
 app.use('/products', productRouters);
 app.use('/orders', orderRouters);
