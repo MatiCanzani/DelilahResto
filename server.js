@@ -1,6 +1,6 @@
 const express = require('express');
 const server = require('./app');
-const sequelize = require('../delilahresto/api/database/db');
+const sequelize = require('./api/database/db');
 
 const PORT = process.env.PORT || 3000;
 
