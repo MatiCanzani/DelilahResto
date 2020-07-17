@@ -1,8 +1,8 @@
 {
   "name": "delilahresto",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "App pedidos restaurante",
-  "main": "index.js",
+  "main": "app.js",
   "dependencies": {
     "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
