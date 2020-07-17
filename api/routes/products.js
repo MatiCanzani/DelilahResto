@@ -28,7 +28,7 @@ router.get('/', async (req, res) => {
         res.status(200).send(product)
     } catch (error) {
         res.status(404).json({
-            error: 'No tienes permisos para realizar esta acción'
+            error: 'No hay productos registrados'
         })
     }
 });
