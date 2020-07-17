@@ -23,7 +23,7 @@ port : '8889',
 
 
 ##Cambiar contraseña de JWT##
-1) Dentro de la carpeta JWT, en el archivo JWTconfig.js modificar el valor de la constante "sign" por su palabra segura. 
+1) Dentro de la carpeta api/JWT, en el archivo JWTconfig.js modificar el valor de la constante "sign" por su palabra segura. 
 Ej: sign = 'aqui su contraseña segura'
 
 
