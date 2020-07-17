@@ -2,7 +2,7 @@ const express = require('express');
 const server = require('./app');
 const sequelize = require('../delilahresto/api/database/db');
 
-const PORT = process.env.PORT || "3000";
+const PORT = process.env.PORT || '';
 
 server.listen(PORT, () => {
     console.log('Server iniciado con éxito');
