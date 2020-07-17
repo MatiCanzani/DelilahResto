@@ -11,7 +11,8 @@
     "jsonwebtoken": "^8.5.1",
     "mysql2": "^2.1.0",
     "nodemon": "^2.0.4",
-    "sequelize": "^6.2.3"
+    "sequelize": "^6.2.3",
+    "lodash": ">=4.17.19"
   },
   "devDependencies": {},
   "scripts": {
