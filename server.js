@@ -2,9 +2,9 @@ const express = require('express');
 const server = require('./app');
 const sequelize = require('../delilahresto/api/database/db');
 
-const PORT = process.env.PORT || '';
+const port = process.env.PORT || 8000;
 
-server.listen(PORT, () => {
+server.listen(port, () => {
     console.log('Server iniciado con éxito');
     sequelize.authenticate().then(()=>{
          console.log('Conectado con éxito a la base de datos');
