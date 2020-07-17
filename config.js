@@ -1,11 +1,9 @@
 const config = {
-    username : 'root',
-    password : 'root',
-    dataBase : 'Delilah_Resto',
-    host: 'localhost',
-    port : '8889',
-    socket: '/Applications/MAMP/tmp/mysql/mysql.sock'
+    username : 'bf8e43b66ab68c',
+    password : '52791f02',
+    dataBase : 'heroku_87e325f58fecdec',
+    host: 'us-cdbr-east-02.cleardb.com',
+    port : '3306',
 }
-
 
 module.exports = config

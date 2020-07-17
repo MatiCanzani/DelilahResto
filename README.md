@@ -5,15 +5,7 @@ Este projecto esta realizado en Node.JS  y base de datos con MySQL.
 ##Configuración DataBase## 
 1) Crear una base de datos local que se llame "Delilah_Resto".
 2) Importar el archivo con el modelo de las tablas SQL que se llama "database".
-3) En el archivo config.js posee todos los valores para conectarse con su base de datos. 
-
-Valores por defecto: 
-
-username : 'root',
-password : 'root',
-dataBase : 'Delilah_Resto',
-host: 'localhost',
-port : '8889',
+3) En el archivo config.js posee todos los valores para conectarse con la base de datos alojada en Heroku. 
 
 
 
