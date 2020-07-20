@@ -3,7 +3,6 @@ const sequelize = require('./api/database/db');
 const cors = require('cors');
 const PORT = process.env.PORT || 3000;
 
-server.use(cors());
 server.listen(PORT, () => {
     console.log('Server iniciado con éxito');
     sequelize.authenticate().then(()=>{
