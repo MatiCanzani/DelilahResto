@@ -24,4 +24,14 @@
 
 //crear una orden.
 
+{
+  "producto_id" : [4,4,4],
+  "forma_de_pago" : "efectivo"
+}
 
+
+//modificar una orden
+
+{
+    "status": "confirmado"
+}

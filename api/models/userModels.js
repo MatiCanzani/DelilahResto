@@ -32,7 +32,7 @@ module.exports = {
         return userById
     },
 
-    updateUserById: async (user, id) => {
+    updateUserById: async (user) => {
         try {
             const userUpdated = await sequelize.query(
                 'UPDATE usuarios SET usuario = ? ,nombre = ? ,apellido = ? ,email = ? ,telefono = ? ,direccion = ? ,password = ? ,isActive = ? ,isAdmin = ?  WHERE usuario = ?',

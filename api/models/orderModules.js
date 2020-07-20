@@ -5,7 +5,8 @@ const safe = require('../JWT/JWTconfig.js');
 
 
 const createOrder = async (order, id) => {
-    const products = Array.from(order.producto_id);
+    const products = order.producto_id;
+    console.log(products)
     const orderCreated = await sequelize.query(
         "INSERT INTO pedidos(forma_de_pago, usuario_id) VALUES (?, ?)",
         {

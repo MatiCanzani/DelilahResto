@@ -24,7 +24,6 @@ const findUser = async (usuario, password) => {
 
 const getUserByToken =  async (token) => {
         const userToken = await jwt.verify(token, safe.sign);
-        console.log(userToken.id);
         return userToken.id
     }
 
