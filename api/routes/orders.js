@@ -4,22 +4,22 @@ const validators = require('../controllers/userController');
 const orderModels = require('../models/orderModules');
 
 
-
-router.post('/', async (req, res) => {
+router.post('/',validators.userValidation, async (req, res) => {
     const token = req.headers.authorization.split(' ')[1];
     const userId = await validators.getUserByToken(token);
     const order = await orderModels.createOrder(req.body, userId);
-    console.log(order)
-    res.status(201).json('orden generada con exito');
+    res.status(201).send('Orden creada con exito');
 
 });
 
-router.get ('/', validators.isAdmin, async (req, res) => {
-    const order = await orderModels.getOrders()
+router.get ('/', validators.userValidation, async (req, res) => {
+    const token = req.headers.authorization.split(' ')[1];
+    const order = await orderModels.getOrdersbyUser(token);
+    // const order = await orderModels.getOrders();
     res.status(200).json(order);
 });
 
-router.get('/:id', validators.userPermision,  async (req, res) => {
+router.get('/:id', validators.userValidation, validators.userPermision,  async (req, res) => {
      try {
         const { id } = req.params;
         const orderByid = await orderModels.getOrdersById(id);
@@ -31,13 +31,13 @@ router.get('/:id', validators.userPermision,  async (req, res) => {
     }
 });
 
-router.patch('/:id',validators.isAdmin, async (req, res) => {
+router.patch('/:id',validators.userValidation, validators.isAdmin, async (req, res) => {
         const { id } = req.params;
         const orderByid = await orderModels.updateOrderById(req.body, id);
     res.status(201).send(orderByid)
 });
 
-router.delete('/:id', validators.isAdmin, async (req, res) => {
+router.delete('/:id',validators.userValidation, validators.isAdmin, async (req, res) => {
     const { id } = req.params;
     await orderModels.deleteOrderById(id);
     res.status(201).json({

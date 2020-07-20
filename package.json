@@ -14,9 +14,8 @@
     "sequelize": "^6.2.3"
   },
   "engines": {
-    "node" : "12.16.2",
-    "npm" : "6.14.4"
-
+    "node": "12.16.2",
+    "npm": "6.14.4"
   },
   "devDependencies": {},
   "scripts": {

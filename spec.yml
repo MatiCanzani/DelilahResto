@@ -1,0 +1,464 @@
+openapi: 3.0.0
+servers:
+  - url: https://localhost:3000
+    description: Local Host
+info:
+  description: Api para Delilah Resto
+  version: 1.0.0
+  title: Delilah Resto
+paths:
+  /products:
+    get:
+      tags:
+        - users
+        - admins
+      summary: Ingresando los valores correctos, se obtiene los productos con
+        descripcion y precio.
+      parameters:
+        - in: query
+          name: offset
+          description: cantidad de items a pasar en cada paginacion
+          schema:
+            type: integer
+            format: int32
+            minimum: 0
+        - in: query
+          name: limit
+          description: cantidad maxima de items a retornar
+          schema:
+            type: integer
+            format: int32
+            minimum: 0
+            maximum: 50
+      responses:
+        '200':
+          description: Lista de productos
+          $ref: '#/components/schemas/products'
+        '403':
+          description: dato ingresado invalido
+    post:
+      tags:
+        - admins
+      summary: agregar un prodructo
+      security:
+        - JWTAuth: []
+      responses:
+        '201':
+          description: Producto creado
+        '401':
+          description: error en valor colocado
+  /products/{id}:
+    get:
+      tags:
+        - users
+        - admins
+      summary: Ingresando los valores correctos, se obtiene los productos con descripcion y precio.
+      parameters:
+        - name: id
+          in: path
+          description:  ID del producto
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - in: query
+          name: offset
+          description: cantidad de items a pasar en cada paginacion
+          schema: 
+            type: integer
+            format: int32
+            minimum: 0
+        - in: query
+          name: limit
+          description: cantidad maxima de items a retornar
+          schema: 
+            type: integer
+            format: int32
+            minimum: 0
+            maximum: 50
+      responses:
+        '200':
+          description: listado de productos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/products'
+    put:
+      tags:
+        - admins
+      summary: modificar un prodructo
+      parameters:
+        - name: id
+          in: path
+          description:  ID del producto
+          required: true
+          schema:
+            type: integer
+            format: int64
+      security:
+        - JWTAuth: []
+      responses:
+        '201':
+          description: Producto modificado
+        '401':
+          description: error en valor colocado
+    delete: 
+      tags:
+        - admins
+      summary: eliminar un prodructo
+      parameters:
+        - name: id
+          in: path
+          description:  ID del producto
+          required: true
+          schema:
+            type: integer
+            format: int64
+      security:
+        - JWTAuth: []
+      responses:
+        '201':
+          description: Producto eliminado
+        '401':
+          description: error en valor ingresado
+  /users:
+    get:
+      tags:
+        - admins
+      summary: Ingresando los valores correctos, se obtiene la lista de usuarios
+      parameters:
+        - in: query
+          name: offset
+          description: cantidad de items a pasar en cada paginacion
+          schema: 
+            type: integer
+            format: int32
+            minimum: 0
+        - in: query
+          name: limit
+          description: cantidad maxima de items a retornar
+          schema: 
+            type: integer
+            format: int32
+            minimum: 0
+            maximum: 50
+      security:
+        - JWTAuth: []
+      responses:
+        '200':
+          description: listado de usuarios
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                $ref: '#/components/schemas/users'
+        '404':
+          description: 'no tiene los permisos para realizar esta acción'
+    post:
+      tags:
+        - users
+        - admins
+      summary: Crear nuevo usuario
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: 
+              $ref: '#/components/schemas/users'
+      responses:
+        '201':
+          description: Usuario creado
+        '401':
+          description: Error al crear el usuario
+  /users/{id}:
+    get:
+      tags:
+        - users
+        - admins
+      summary: Ingresando los valores correctos, se obtiene los datos del usuario
+      parameters:
+        - in: path
+          name: id
+          description: id del usuario
+          required: true
+          schema: 
+            type: string
+        - in: query
+          name: offset
+          description: cantidad de items a pasar en cada paginacion
+          schema:
+            type: integer
+            format: int32
+            minimum: 0
+        - in: query
+          name: limit
+          description: cantidad maxima de usuarios a retornar
+          schema: 
+            type: integer
+            format: int32
+            minimum: 0
+            maximum: 50
+      security:
+        - JWTAuth: []      
+      responses:
+        '200':
+          description: Detalle de usuarios
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/users'
+        '401':
+          description: El token de acceso no se ha encontrado o es invalido.
+        '404':
+          description: usuario no encontrado
+    put:
+      tags: 
+        - users
+        - admins
+      summary: modificar un usuario
+      parameters:
+        - name: id
+          in: path
+          description:  ID del producto
+          required: true
+          schema:
+            type: integer
+            format: int64
+      security:
+        - JWTAuth: []
+      responses:
+        '201':
+          description: Usuario modificado
+        '401':
+          description: error en valor colocado
+  /orders:
+    get:
+      tags:
+        - admins
+        - users
+      summary: 'Ingresando los valores correctos, se obtiene la lista de pedidos'
+      security:
+        - JWTAuth: []
+      parameters:
+        - in: query
+          name: offset
+          description: cantidad de items a pasar en cada paginacion
+          schema: 
+            type: integer
+            format: int32
+            minimum: 0
+        - in: query
+          name: limit
+          description: cantidad maxima de items a retornar
+          schema:
+            type: integer
+            format: int64
+            minimum: 0
+            maximum: 50
+      responses:
+        '200':
+          description: listado de pedidos
+          content:
+            application/json:
+              schema:
+                type: string
+                items: 
+                  $ref: '#/components/schemas/orders'
+        '400':
+          description: error en valor colocado
+    post:
+      tags: 
+      - users
+      summary: Crear nuevo pedido
+      security:
+        - JWTAuth: []
+      responses:
+        '201':
+          description: Pedido creado
+        '401':
+          description: error en valor colocado
+  /orders/{id}:
+    get:
+      tags:
+        - admins
+      summary: 'Ingresando los valores correctos, se obtiene los datos del pedidos'
+      parameters:
+        - in: path
+          name: id
+          description: id del pedido
+          required: true
+          schema: 
+            type: string
+        - in: query
+          name: offset
+          description: cantidad de items a pasar en cada paginacion
+          schema: 
+            type: integer
+            format: int64
+            minimum: 0
+        - in: query
+          name: limit
+          description: cantidad maxima de pedidos a retornar
+          schema: 
+            type: integer
+            format: int64
+            minimum: 0
+            maximum: 50
+      security:
+        - JWTAuth: []
+      responses:
+        '200':
+          description: Detalle de pedidos
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                $ref: '#/components/schemas/orders'
+        '401':
+          description: El token de acceso no se ha encontrado o es invalido.
+        '404':
+          description: pedido no encontrado
+    put:
+      tags: 
+      - admins
+      summary: modificar un pedido
+      parameters:
+        - name: id
+          in: path
+          description:  ID del producto
+          required: true
+          schema:
+            type: integer
+            format: int64
+      security:
+        - JWTAuth: []
+      responses:
+        '201':
+          description: pedido modificado
+        '401':
+          description: error en valor colocado
+    delete: 
+      tags:
+        - admins
+      summary: eliminar una orden
+      parameters:
+        - name: id
+          in: path
+          description:  ID del producto
+          required: true
+          schema:
+            type: integer
+            format: int64
+      security:
+        - JWTAuth: []
+      responses:
+        '201':
+          description: Orden eliminada
+        '401':
+          description: error en valor ingresado
+  /login:
+    post:
+      tags:
+        - admins
+        - users
+      summary: Login de usuarios
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: 
+              $ref: '#/components/schemas/login'
+      responses:
+        '201':
+          description: Usuario logueado
+        '401':
+          description: Usuario o contraseña invalida
+        '409':
+          description: El usuario no existe. 
+components:
+  securitySchemes:
+    JWTAuth: 
+      type: http
+      scheme: bearer
+      bearerFormat: JWT 
+  schemas:
+    login: 
+      type: object
+      properties:
+        usuario:
+          type: string 
+        password:
+          type: string        
+    products:
+      type: object
+      properties:
+        id:
+          type: string
+          example: soansnoa
+        nombre_plato:
+          type: string
+        detalle:
+          type: string
+          example: Sandwich de salmon con pan de harina de almendras.
+        foto:
+          type: string
+          example: 'https://unsplash.com/photos/ddZYOtZUnBk'
+        precio:
+          type: integer
+          format: int32
+          example: 360
+    users:
+      type: object
+      properties:
+        usuario:
+          type: string
+        nombre:
+          type: string
+        apellido:
+          type: string
+        email:
+          type: string
+          example: test@test.com
+        password:
+          type: string
+        telefono:
+          type: integer
+          format: int64
+        direccion:
+            type: string
+    orders:
+      type: object
+      required:
+        - id
+      properties:
+        id:
+          type: integer
+          format: int32
+        id_usuario:
+          type: integer
+          format: int32
+        id_producto:
+          type: string
+        forma_de_depago:
+          type: string
+          enum: 
+            - efectivo
+            - tarjeta 
+        estado:
+          type: string
+          enum:
+            - Nuevo
+            - Confirmado
+            - Preparando
+            - Enviado
+            - Entregado
+        fechaCreacion:
+          type: string
+          format: date-time
+        fechaActualizacion:
+          type: string
+          format: date-time

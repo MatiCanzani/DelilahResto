@@ -9,7 +9,7 @@ const loginRouter = require('./api/routes/login')
 const auntenticateRouter = require('./api/routes/verify.js')
 
 app.get('/', (req,res) => {
-    res.send('Bienvenido a mi primer API')
+    res.send('Bienvenido a la API de Delilha Resto')
 });
 app.use(bodyParser.json(), cors(),);
 app.use('/products', productRouters);

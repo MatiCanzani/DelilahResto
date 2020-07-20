@@ -1,8 +1,10 @@
+//Modelo crear producto
 "nombre_plato": "Mila con pure",
-"foto": "",
+"foto": "https://loremflickr.com/320/240/food",
 "detalle": "Milanesa de ternera con pure de papas",
 "precio": 380
 
+//Modelo crear usuario
 "usuario": "mcanzani",
 "nombre": "valer",
 "apellido": "canzani",
@@ -11,8 +13,16 @@
 "telefono": 121212,
 "direccion": "ciudad de la paz 151",
 
+//login
 "usuario" : "mcanzani",
 "password" : "Charlie"
 
+
+Usuario admin: 
+
+"usuario": "mcanzani",
+"password": "Charlie"
+
+//crear una orden.
 
 

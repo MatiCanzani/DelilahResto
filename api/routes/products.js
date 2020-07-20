@@ -3,7 +3,8 @@ const router = express.Router();
 const validators = require('../controllers/userController');
 const productModels = require('../models/productModels');
 
-router.post('/', validators.isAdmin, async (req, res) => {
+
+router.post('/', validators.userValidation, validators.isAdmin, async (req, res) => {
     try {
         const product = await productModels.createProduct
             ({
@@ -13,7 +14,7 @@ router.post('/', validators.isAdmin, async (req, res) => {
                 precio: req.body.precio
             })
         res.status(201).json({
-            message: `Producto creado con exito ${product}`
+            message: `Producto creado con exito `
         })
     } catch (error) {
         res.status(404).json({
@@ -45,7 +46,7 @@ router.get('/:id', async (req, res) => {
     }
 });
 
-router.put('/:id', validators.isAdmin, async (req, res) => {
+router.put('/:id', validators.userValidation, validators.isAdmin, async (req, res) => {
     const { id } = req.params;
     try{ 
     const getByProductId = await productModels.updateProductById(req.body, id);
@@ -57,7 +58,7 @@ router.put('/:id', validators.isAdmin, async (req, res) => {
     }
 });
 
-router.delete('/:id', validators.isAdmin, async (req, res) => {
+router.delete('/:id', validators.userValidation, validators.isAdmin, async (req, res) => {
     try {
         const { id } = req.params;
         const deleteProduct = await productModels.deleteproductById(id);

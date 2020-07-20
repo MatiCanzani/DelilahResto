@@ -1,6 +1,7 @@
 const sequelize = require('../database/db');
-
-
+const validators = require('../controllers/userController');
+const jwt = require('jsonwebtoken');
+const safe = require('../JWT/JWTconfig.js');
 
 
 const createOrder = async (order, id) => {
@@ -49,6 +50,7 @@ const createOrder = async (order, id) => {
         });
     return products
 };
+
 const getOrdersById = async (id) => {
     const orders = await sequelize.query(
         `SELECT pedido_id, GROUP_CONCAT(nombre_plato separator ', ') AS descripcion, nombre, apellido , direccion, total
@@ -72,6 +74,39 @@ const getOrdersById = async (id) => {
     return orders;
 };
 
+const getOrdersbyUser = async (token) => {
+    const userToken = await jwt.verify(token, safe.sign);
+    console.log(userToken.isAdmin);
+    if (userToken.isAdmin == 1) {
+        return getOrders();
+    }
+    else {
+        const id = userToken.id
+        console.log(id)
+        const orders = await sequelize.query(
+            `SELECT pedido_id, status, GROUP_CONCAT(nombre_plato separator ', ') AS descripcion, nombre, apellido , direccion, total
+                FROM
+                (
+                SELECT pedido_id, status, nombre, apellido ,direccion, total, CONCAT(nombre_plato, ' X ',
+                COUNT ( cantidad ))AS nombre_plato
+                FROM pedidos
+                JOIN pedidos_productos ON pedidos.id = pedidos_productos.pedido_id
+                JOIN usuarios ON pedidos.usuario_id = usuarios.id
+                JOIN productos ON pedidos_productos.producto_id = productos.id
+                WHERE pedidos.usuario_id = ?
+                GROUP BY pedido_id, nombre_plato
+                ) pedido
+                GROUP BY pedido_id
+                `,
+            {
+                replacements: [id],
+                type: sequelize.QueryTypes.SELECT,
+            }
+        );
+        return orders
+    }
+}
+
 const getOrders = async () => {
     const orders = await sequelize.query(
         `SELECT pedido_id, status, GROUP_CONCAT(nombre_plato separator ', ') AS descripcion, nombre, apellido , direccion, total
@@ -85,12 +120,12 @@ const getOrders = async () => {
             JOIN productos ON pedidos_productos.producto_id = productos.id
             GROUP BY pedido_id, nombre_plato
             ) pedido
-            GROUP BY pedido_id`,
+            GROUP BY pedido_id
+            `,
         {
             type: sequelize.QueryTypes.SELECT,
         }
     );
-
     return orders
 };
 
@@ -108,6 +143,7 @@ const updateOrderById = async (order, id) => {
         'no se pudo actualizar el producto de la base de datos'
     };
 };
+
 const deleteOrderById = async (id) => {
     try {
         const orderDeleted = await sequelize.query(
@@ -121,4 +157,4 @@ const deleteOrderById = async (id) => {
     };
 };
 
-module.exports = { createOrder, deleteOrderById, updateOrderById, getOrdersById, getOrders }
+module.exports = { createOrder, deleteOrderById, updateOrderById, getOrdersById, getOrdersbyUser , getOrders}

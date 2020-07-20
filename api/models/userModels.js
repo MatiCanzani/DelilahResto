@@ -26,7 +26,7 @@ module.exports = {
     },
 
     getUserByUser: async (user) => {
-        const userById = await sequelize.query('SELECT * FROM usuarios WHERE usuario = ?',
+        const userById = await sequelize.query('SELECT usuario, nombre, apellido, direccion, telefono, email FROM usuarios WHERE usuario = ?',
             { replacements: [user], type: sequelize.QueryTypes.SELECT }
         );
         return userById
@@ -55,8 +55,6 @@ module.exports = {
             'no se pudo actualizar el usuario de la base de datos'
         }
     },
-
-    
 
     deleteUserById: async (id) => {
         try {

@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 const validators = require('../controllers/userController');
 const userModels = require('../models/userModels');
 
+
 router.post('/', (req, res) => {
     bcrypt.hash(req.body.password, 10, (err, hash) => {
         if (err) {
@@ -29,7 +30,7 @@ router.post('/', (req, res) => {
     })
 });
 
-router.get('/', validators.isAdmin, async (req, res) => {
+router.get('/', validators.userValidation, validators.isAdmin, async (req, res) => {
     try {
         const user = await userModels.getUsers();
         res.status(200).send(user)
@@ -40,7 +41,7 @@ router.get('/', validators.isAdmin, async (req, res) => {
     }
 });
 
-router.get('/:user', validators.userPermision, async (req, res) => {
+router.get('/:user',validators.userValidation,validators.userPermision, async (req, res) => {
     try {
         const { user } = req.params;
             const userByUser = await userModels.getUserByUser(user);
@@ -52,21 +53,19 @@ router.get('/:user', validators.userPermision, async (req, res) => {
     }
 });
 
-router.put('/:id',validators.isAdmin, async (req, res) => {
+router.put('/:id',validators.userValidation,validators.isAdmin, async (req, res) => {
     const { id } = req.params;
-    console.log(id)      
     try{ 
     const userById = await userModels.updateUserById(req.body, id);
-    console.log(userById)
     res.status(201).send(`Los cambios se realizaron con exito`)
-    } catch(err){
+    } catch(err){   
         res.status(403).json({
             error: 'No tiene los permisos para realizar esta modificación'
         })
     }
 });     
 
-router.delete('/:id', validators.isAdmin, async (req, res) => {
+router.delete('/:id',validators.userValidation, validators.isAdmin, async (req, res) => {
     try {
         const { id } = req.params;
         await userModels.deleteUserById(id);

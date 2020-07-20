@@ -15,6 +15,7 @@ module.exports = {
             })
         return productCreated
     },
+
     getProducts: async () => {
         const products = await sequelize.query('SELECT * FROM productos',
             { type: sequelize.QueryTypes.SELECT }

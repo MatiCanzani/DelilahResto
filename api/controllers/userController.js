@@ -28,6 +28,17 @@ const getUserByToken =  async (token) => {
         return userToken.id
     }
 
+const getAdminByToken = async (token) => {
+    const userToken = await jwt.verify(token, safe.sign);
+    console.log(userToken.isAdmin);
+    if(userToken.isAdmin == 1) {
+        return userToken.isAdmin
+    }
+    else{
+        return userToken.id
+    }
+
+}    
 
 const userAuthentication = async (req, res, next) => {
     try {
@@ -43,8 +54,9 @@ const userAuthentication = async (req, res, next) => {
     }
 };
 
-//validar que es Administrador para tener diferentes permisos 
 
+
+//validar que es Administrador para tener diferentes permisos 
 const isAdmin = async (req, res, next) => {
     const token = req.headers.authorization.split(' ')[1];
     const admin = await jwt.verify(token, safe.sign);
@@ -58,17 +70,14 @@ const isAdmin = async (req, res, next) => {
 }
 
 //validar si es usuario registrado. 
-
 const userPermision = async (req, res, next) => {
-    const token = req.headers.authorization.split(' ')[1];
-    const verifiedUser = await jwt.verify(token, safe.sign);
-    const user = verifiedUser.usuario;
-    const reqUser = req.params
-    console.log(reqUser.user);
-    console.log(user);
     try {
+        const token = req.headers.authorization.split(' ')[1];
+        const verifiedUser = await jwt.verify(token, safe.sign);
+        const user = verifiedUser.usuario;
+        const reqUser = req.params
         if (user !== reqUser.user ) {
-            res.status(404).send('Usuario incorrecto, Introduzca su usuario')
+            res.status(404).send('Usuario incorrecto, Introduzca su usuario' )
         }
         else {
             next();
@@ -77,4 +86,19 @@ const userPermision = async (req, res, next) => {
     catch (err) { res.status(401).json({ error: 'No se puede validar el usuario' }) }
 }
 
-module.exports = { isAdmin, userAuthentication, userPermision, findUser, getUserByToken, getUserData}
+const userValidation = async (req, res, next) => {
+    try {
+        const token = req.headers.authorization.split(' ')[1];
+        const verifiedUser = await jwt.verify(token, safe.sign);
+        const user = verifiedUser.usuario;
+        if (!user) {
+            res.status(404).send('Debe realizar login' )
+        }
+        else {
+            next();
+        }
+    }
+    catch (err) { res.status(401).json({ error: 'Debe realizar login' }) }
+}
+
+module.exports = { isAdmin, userAuthentication, userPermision, findUser, getUserByToken, getUserData, userValidation, getAdminByToken}
