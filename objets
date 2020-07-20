@@ -13,15 +13,14 @@
 "telefono": 121212,
 "direccion": "ciudad de la paz 151",
 
-//login
+//login usuario admin
 "usuario" : "mcanzani",
 "password" : "Charlie"
 
+//login usuario cliente
+"usuario" : "pmarini",
+"password" : "benja"
 
-Usuario admin: 
-
-"usuario": "mcanzani",
-"password": "Charlie"
 
 //crear una orden.
 
