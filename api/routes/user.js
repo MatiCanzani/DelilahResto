@@ -53,7 +53,7 @@ router.get('/:user',validators.userValidation,validators.userPermision, async (r
     }
 });
 
-router.put('/:user',validators.userValidation,validators.isAdmin, async (req, res) => {
+router.patch('/:user',validators.userValidation,validators.isAdmin, async (req, res) => {
     const { id } = req.params;
     try{ 
     const userById = await userModels.updateUserById(req.body, id);
