@@ -5,7 +5,7 @@ const validators = require('../controllers/userController');
 const userModels = require('../models/userModels');
 
 
-router.post('/', (req, res) => {
+router.post('/:register', (req, res) => {
     bcrypt.hash(req.body.password, 10, (err, hash) => {
         if (err) {
             return res.status(500).json({
