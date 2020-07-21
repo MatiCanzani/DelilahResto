@@ -2,6 +2,13 @@ DELILHA RESTO
 
 Este projecto esta realizado en Node.JS  y base de datos con MySQL.
 
+La base de datos ya esta conectada a Heroku donde se encuentra alojada para realizar las pruebas.
+
+Si se quiere realizar de manera local
+
+##Para iniciar el servidor##
+Abir la terminal y colocar node server.js
+
 ##Configuración DataBase## 
 1) Crear una base de datos local que se llame "Delilah_Resto".
 2) Importar el archivo con el modelo de las tablas SQL que se llama "database".
@@ -19,7 +26,6 @@ Este projecto esta realizado en Node.JS  y base de datos con MySQL.
 Ej: sign = 'aqui su contraseña segura'
 
 
-
-
 ##Modelos de usuarios, pedidos, login y productos##
-Los modelos para realizar peticiones a la API se encuentran en el archivo "objects".
+Modelos de objetos para realizar las consultas en Postman 
+se encuentran en el archivo "objects".

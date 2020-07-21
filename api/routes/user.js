@@ -54,9 +54,9 @@ router.get('/:user',validators.userValidation,validators.userPermision, async (r
 });
 
 router.patch('/:user',validators.userValidation,validators.isAdmin, async (req, res) => {
-    const { id } = req.params;
+    const { user } = req.params;
     try{ 
-    const userById = await userModels.updateUserById(req.body, id);
+    const userById = await userModels.updateUserById(req.body, user);
     res.status(201).send(`Los cambios se realizaron con exito`)
     } catch(err){   
         res.status(403).json({
@@ -69,7 +69,7 @@ router.delete('/:id',validators.userValidation, validators.isAdmin, async (req, 
     try {
         const { id } = req.params;
         await userModels.deleteUserById(id);
-        res.status(200).send({ Message: `Usuario eliminado con éxito!`});
+        res.status(200).json({ Message: `Usuario eliminado con éxito!`});
     } catch (err) {
         res.status(403).json({
             error: 'No se pudo eliminar el usuario'

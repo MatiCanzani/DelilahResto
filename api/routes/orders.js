@@ -48,11 +48,18 @@ router.patch('/:id',validators.userValidation, validators.isAdmin, async (req, r
 });
 
 router.delete('/:id',validators.userValidation, validators.isAdmin, async (req, res) => {
+    try {
     const { id } = req.params;
     await orderModels.deleteOrderById(id);
     res.status(201).json({
-        message: 'oder borrada',
-    });
+        message: 'orden borrada',}); 
+    
+    }catch (err) {
+        res.status(403).json({
+            error: 'No se pudo eliminar la orden'
+        })
+    };
 });
+    
 
 module.exports = router;

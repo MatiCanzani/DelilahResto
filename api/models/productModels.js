@@ -51,13 +51,22 @@ module.exports = {
         }
     },
 
-    deleteproductById: async (id) => {
+    deleteProductById: async (id) => {
         try {
             const productDeleted = await sequelize.query(
-                ' DELETE FROM productos WHERE id = ?',
+                ` DELETE FROM pedidos_productos 
+                WHERE producto_id = ?`,
                 {
-                    replacements: [id],
-                })
+                    replacements: [id],     
+                });
+            
+            const product = await sequelize.query(
+                `DELETE FROM productos 
+                WHERE id = ?`,
+                {
+                    replacements: [id],     
+                });
+
             return productDeleted;
         } catch (err) {
             'no se puede eliminar el producto de la base de datos'

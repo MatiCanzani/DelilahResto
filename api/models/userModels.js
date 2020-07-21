@@ -32,10 +32,11 @@ module.exports = {
         return userById
     },
 
-    updateUserById: async (user) => {
+    updateUserById: async (user,id) => {
         try {
+
             const userUpdated = await sequelize.query(
-                'UPDATE usuarios SET usuario = ? ,nombre = ? ,apellido = ? ,email = ? ,telefono = ? ,direccion = ? ,password = ? ,isActive = ? ,isAdmin = ?  WHERE usuario = ?',
+                'UPDATE usuarios SET email = ? ,telefono = ? ,direccion = ? WHERE usuario = ?',
                 {
                     replacements: [
                         user.usuario,
@@ -47,7 +48,7 @@ module.exports = {
                         user.password,
                         user.isActive,
                         user.isAdmin,
-                        [user]
+                        [id]
                     ],
                 });
             return userUpdated

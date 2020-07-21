@@ -61,7 +61,7 @@ router.put('/:id', validators.userValidation, validators.isAdmin, async (req, re
 router.delete('/:id', validators.userValidation, validators.isAdmin, async (req, res) => {
     try {
         const { id } = req.params;
-        const deleteProduct = await productModels.deleteproductById(id);
+        await productModels.deleteProductById(id);
         res.status(200).send('Producto eliminado con extito');
     } catch (err) {
         res.status(403).json({

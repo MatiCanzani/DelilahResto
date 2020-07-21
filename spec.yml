@@ -1,7 +1,6 @@
 openapi: 3.0.0
-servers:
-  - url: https://localhost:3000
-    description: Local Host
+servers: 
+  - url: 'http://delilahrestoacamica.herokuapp.com'
 info:
   description: Api para Delilah Resto
   version: 1.0.0
@@ -14,22 +13,6 @@ paths:
         - admins
       summary: Ingresando los valores correctos, se obtiene los productos con
         descripcion y precio.
-      parameters:
-        - in: query
-          name: offset
-          description: cantidad de items a pasar en cada paginacion
-          schema:
-            type: integer
-            format: int32
-            minimum: 0
-        - in: query
-          name: limit
-          description: cantidad maxima de items a retornar
-          schema:
-            type: integer
-            format: int32
-            minimum: 0
-            maximum: 50
       responses:
         '200':
           description: Lista de productos
@@ -40,6 +23,12 @@ paths:
       tags:
         - admins
       summary: agregar un prodructo
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: 
+              $ref: '#/components/schemas/products'
       security:
         - JWTAuth: []
       responses:
@@ -61,21 +50,6 @@ paths:
           schema:
             type: integer
             format: int64
-        - in: query
-          name: offset
-          description: cantidad de items a pasar en cada paginacion
-          schema: 
-            type: integer
-            format: int32
-            minimum: 0
-        - in: query
-          name: limit
-          description: cantidad maxima de items a retornar
-          schema: 
-            type: integer
-            format: int32
-            minimum: 0
-            maximum: 50
       responses:
         '200':
           description: listado de productos
@@ -87,6 +61,12 @@ paths:
       tags:
         - admins
       summary: modificar un prodructo
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: 
+              $ref: '#/components/schemas/products'
       parameters:
         - name: id
           in: path
@@ -126,22 +106,6 @@ paths:
       tags:
         - admins
       summary: Ingresando los valores correctos, se obtiene la lista de usuarios
-      parameters:
-        - in: query
-          name: offset
-          description: cantidad de items a pasar en cada paginacion
-          schema: 
-            type: integer
-            format: int32
-            minimum: 0
-        - in: query
-          name: limit
-          description: cantidad maxima de items a retornar
-          schema: 
-            type: integer
-            format: int32
-            minimum: 0
-            maximum: 50
       security:
         - JWTAuth: []
       responses:
@@ -180,25 +144,11 @@ paths:
       parameters:
         - in: path
           name: id
-          description: id del usuario
+          description: Ingrese su usuario
+          example: "mcanzani"
           required: true
           schema: 
             type: string
-        - in: query
-          name: offset
-          description: cantidad de items a pasar en cada paginacion
-          schema:
-            type: integer
-            format: int32
-            minimum: 0
-        - in: query
-          name: limit
-          description: cantidad maxima de usuarios a retornar
-          schema: 
-            type: integer
-            format: int32
-            minimum: 0
-            maximum: 50
       security:
         - JWTAuth: []      
       responses:
@@ -214,19 +164,26 @@ paths:
           description: El token de acceso no se ha encontrado o es invalido.
         '404':
           description: usuario no encontrado
-    put:
+    patch:
       tags: 
         - users
         - admins
-      summary: modificar un usuario
       parameters:
-        - name: id
-          in: path
-          description:  ID del producto
+        - in: path
+          name: id
+          description: Ingrese su usuario
+          example: "mcanzani"
           required: true
-          schema:
-            type: integer
-            format: int64
+          schema: 
+            type: string
+      summary: modificar un usuario
+      description:  Ingresar nombre de usuario
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: 
+              $ref: '#/components/schemas/userupdate'
       security:
         - JWTAuth: []
       responses:
@@ -238,26 +195,9 @@ paths:
     get:
       tags:
         - admins
-        - users
       summary: 'Ingresando los valores correctos, se obtiene la lista de pedidos'
       security:
         - JWTAuth: []
-      parameters:
-        - in: query
-          name: offset
-          description: cantidad de items a pasar en cada paginacion
-          schema: 
-            type: integer
-            format: int32
-            minimum: 0
-        - in: query
-          name: limit
-          description: cantidad maxima de items a retornar
-          schema:
-            type: integer
-            format: int64
-            minimum: 0
-            maximum: 50
       responses:
         '200':
           description: listado de pedidos
@@ -272,9 +212,16 @@ paths:
     post:
       tags: 
       - users
+      - admins
       summary: Crear nuevo pedido
       security:
         - JWTAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: 
+              $ref: '#/components/schemas/orders'
       responses:
         '201':
           description: Pedido creado
@@ -292,32 +239,11 @@ paths:
           required: true
           schema: 
             type: string
-        - in: query
-          name: offset
-          description: cantidad de items a pasar en cada paginacion
-          schema: 
-            type: integer
-            format: int64
-            minimum: 0
-        - in: query
-          name: limit
-          description: cantidad maxima de pedidos a retornar
-          schema: 
-            type: integer
-            format: int64
-            minimum: 0
-            maximum: 50
       security:
         - JWTAuth: []
       responses:
         '200':
           description: Detalle de pedidos
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                $ref: '#/components/schemas/orders'
         '401':
           description: El token de acceso no se ha encontrado o es invalido.
         '404':
@@ -330,10 +256,15 @@ paths:
         - name: id
           in: path
           description:  ID del producto
-          required: true
           schema:
             type: integer
-            format: int64
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: 
+              $ref: '#/components/schemas/ordersupdate'
       security:
         - JWTAuth: []
       responses:
@@ -396,11 +327,9 @@ components:
     products:
       type: object
       properties:
-        id:
-          type: string
-          example: soansnoa
         nombre_plato:
           type: string
+          example: Sandwich veggie
         detalle:
           type: string
           example: Sandwich de salmon con pan de harina de almendras.
@@ -430,35 +359,35 @@ components:
           format: int64
         direccion:
             type: string
+    userupdate: 
+      type: object
+      properties:
+        email:
+          type: string
+          example: test@test.com
+        telefono:
+          type: integer
+          format: int64
+        direccion:
+            type: string    
     orders:
       type: object
-      required:
-        - id
       properties:
-        id:
-          type: integer
-          format: int32
-        id_usuario:
-          type: integer
-          format: int32
-        id_producto:
+        producto_id:
           type: string
+          example : [4,4,5]
         forma_de_depago:
           type: string
           enum: 
             - efectivo
-            - tarjeta 
-        estado:
-          type: string
+            - tarjeta
+    ordersupdate:
+      type: object
+      properties: 
+        status: 
           enum:
-            - Nuevo
-            - Confirmado
-            - Preparando
-            - Enviado
-            - Entregado
-        fechaCreacion:
-          type: string
-          format: date-time
-        fechaActualizacion:
-          type: string
-          format: date-time
+          - confirmado
+          - preparando
+          - enviando
+          - entregado
+          example : "confirmado"
