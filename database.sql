@@ -3,18 +3,12 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Jul 17, 2020 at 05:31 PM
+-- Generation Time: Jul 21, 2020 at 09:16 PM
 -- Server version: 5.7.26
 -- PHP Version: 7.4.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Database: `Delilah_Resto`
@@ -33,9 +27,16 @@ CREATE TABLE `pedidos` (
   `forma_de_pago` varchar(255) DEFAULT NULL,
   `usuario_id` int(11) DEFAULT NULL,
   `total` int(11) DEFAULT NULL,
-  `fecha_pedido` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `fecha_actualizado` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `fecha_pedido` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `pedidos`
+--
+
+INSERT INTO `pedidos` (`id`, `status`, `descripcion`, `forma_de_pago`, `usuario_id`, `total`, `fecha_pedido`) VALUES
+(3, 'nuevo', NULL, 'tarjeta', 1, 890, '2020-07-21 21:13:16'),
+(4, 'nuevo', NULL, 'efectivo', 2, 720, '2020-07-21 21:14:31');
 
 -- --------------------------------------------------------
 
@@ -50,6 +51,18 @@ CREATE TABLE `pedidos_productos` (
   `cantidad` int(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `pedidos_productos`
+--
+
+INSERT INTO `pedidos_productos` (`id`, `pedido_id`, `producto_id`, `cantidad`) VALUES
+(311, 3, 1, 1),
+(312, 3, 2, 1),
+(313, 3, 3, 1),
+(314, 4, 1, 1),
+(315, 4, 3, 1),
+(316, 4, 3, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -63,6 +76,15 @@ CREATE TABLE `productos` (
   `foto` varchar(255) DEFAULT NULL,
   `precio` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `productos`
+--
+
+INSERT INTO `productos` (`id`, `nombre_plato`, `detalle`, `foto`, `precio`) VALUES
+(1, 'Sandwich veggie', 'Sandwich de salmon con pan de harina de almendras.', 'https://unsplash.com/photos/ddZYOtZUnBk', 360),
+(2, 'Sandwich de Mila', 'Sandwich de scarne de ternera', 'https://unsplash.com/photos/ddZYOtZUnBk', 350),
+(3, 'Sandwich de Chori', 'Sandwich de chorizo cacero', 'https://unsplash.com/photos/ddZYOtZUnBk', 180);
 
 -- --------------------------------------------------------
 
@@ -82,6 +104,15 @@ CREATE TABLE `usuarios` (
   `isActive` tinyint(1) DEFAULT '1',
   `isAdmin` tinyint(1) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `usuarios`
+--
+
+INSERT INTO `usuarios` (`id`, `usuario`, `nombre`, `apellido`, `email`, `telefono`, `direccion`, `password`, `isActive`, `isAdmin`) VALUES
+(1, 'mcanzani', 'matias', 'canzani', 'test@test.com', 121212, 'ciudad de la paz 151', '$2b$10$zqdp20LMN/jWhWMNZWqvuul3X8gwbIp8KubzhQ2wWf4WMkNN5yDLG', 1, 1),
+(2, 'pmarini', 'pedro', 'marini', 'test@test.com', 121212, 'acacerca 222', '$2b$10$amLqsA6PqVn8.xaNMNBDxel3hdhj0exTxTWqd2/ob1JyqKG2ZGa.C', 1, 0),
+(3, 'vborzori', 'valeria', 'brozori', 'test@2test.com', 121212, 'mascerca 111', '$2b$10$t2/2x7nnPjCS5Gu/Okxhr.md1CQg67LkVDOoNnbpVV/FJ89GciT6u', 1, 0);
 
 --
 -- Indexes for dumped tables
@@ -123,13 +154,13 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT for table `pedidos`
 --
 ALTER TABLE `pedidos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `pedidos_productos`
 --
 ALTER TABLE `pedidos_productos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=311;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=317;
 
 --
 -- AUTO_INCREMENT for table `productos`
@@ -141,7 +172,7 @@ ALTER TABLE `productos`
 -- AUTO_INCREMENT for table `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables
@@ -159,7 +190,3 @@ ALTER TABLE `pedidos`
 ALTER TABLE `pedidos_productos`
   ADD CONSTRAINT `pedidos_productos_ibfk_1` FOREIGN KEY (`pedido_id`) REFERENCES `pedidos` (`id`),
   ADD CONSTRAINT `pedidos_productos_ibfk_2` FOREIGN KEY (`producto_id`) REFERENCES `productos` (`id`);
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

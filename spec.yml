@@ -119,6 +119,7 @@ paths:
                 $ref: '#/components/schemas/users'
         '404':
           description: 'no tiene los permisos para realizar esta acción'
+  /users/register: 
     post:
       tags:
         - users
@@ -194,7 +195,8 @@ paths:
   /orders:
     get:
       tags:
-        - admins
+      - users
+      - admins
       summary: 'Ingresando los valores correctos, se obtiene la lista de pedidos'
       security:
         - JWTAuth: []

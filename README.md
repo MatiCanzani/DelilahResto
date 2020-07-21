@@ -1,5 +1,4 @@
 DELILHA RESTO
-
 Este projecto esta realizado en Node.JS  y base de datos con MySQL.
 
 La base de datos ya esta conectada a Heroku donde se encuentra alojada para realizar las pruebas.
@@ -29,3 +28,43 @@ Ej: sign = 'aqui su contraseña segura'
 ##Modelos de usuarios, pedidos, login y productos##
 Modelos de objetos para realizar las consultas en Postman 
 se encuentran en el archivo "objects".
+
+//Modelo crear producto
+"nombre_plato": "Mila con pure",
+"foto": "https://loremflickr.com/320/240/food",
+"detalle": "Milanesa de ternera con pure de papas",
+"precio": 380
+
+//Modelo crear usuario
+"usuario": "mcanzani",
+"nombre": "valer",
+"apellido": "canzani",
+"email": "test@test.com",
+"password": "Charlie",
+"telefono": 121212,
+"direccion": "ciudad de la paz 151",
+
+//usuario Admin
+"usuario" : "mcanzani",
+"password" : "Charlie"
+
+//login usuario cliente
+"usuario" : "pmarini",
+"password" : "benja"
+"usuario" : "vborzori",
+"password" : "valeria"
+
+
+//crear una orden.
+
+{
+  "producto_id" : [1,1],
+  "forma_de_pago" : "efectivo"
+}
+
+
+//modificar una orden
+
+{
+    "status": "confirmado"
+}
