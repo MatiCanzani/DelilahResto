@@ -248,14 +248,14 @@ paths:
           description: El token de acceso no se ha encontrado o es invalido.
         '404':
           description: pedido no encontrado
-    put:
+    patch:
       tags: 
       - admins
       summary: modificar un pedido
       parameters:
         - name: id
           in: path
-          description:  ID del producto
+          description:  ID del pedido
           schema:
             type: integer
           required: true
