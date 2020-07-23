@@ -1,99 +1,21 @@
--- phpMyAdmin SQL Dump
--- version 4.9.3
--- https://www.phpmyadmin.net/
---
--- Host: localhost:8889
--- Generation Time: Jul 21, 2020 at 09:16 PM
--- Server version: 5.7.26
--- PHP Version: 7.4.2
+# ************************************************************
+# Sequel Pro SQL dump
+# Versión 4541
+#
+# http://www.sequelpro.com/
+# https://github.com/sequelpro/sequelpro
+#
+# Host: us-cdbr-east-02.cleardb.com (MySQL 5.5.62-log)
+# Base de datos: heroku_87e325f58fecdec
+# Tiempo de Generación: 2020-07-21 18:11:32 +0000
+# ************************************************************
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET time_zone = "+00:00";
+# Volcado de tabla usuarios
 
---
--- Database: `Delilah_Resto`
---
-
--- --------------------------------------------------------
-
---
--- Table structure for table `pedidos`
---
-
-CREATE TABLE `pedidos` (
-  `id` int(11) NOT NULL,
-  `status` enum('nuevo','confirmado','preparando','enviado','entregado') DEFAULT 'nuevo',
-  `descripcion` varchar(256) DEFAULT NULL,
-  `forma_de_pago` varchar(255) DEFAULT NULL,
-  `usuario_id` int(11) DEFAULT NULL,
-  `total` int(11) DEFAULT NULL,
-  `fecha_pedido` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `pedidos`
---
-
-INSERT INTO `pedidos` (`id`, `status`, `descripcion`, `forma_de_pago`, `usuario_id`, `total`, `fecha_pedido`) VALUES
-(3, 'nuevo', NULL, 'tarjeta', 1, 890, '2020-07-21 21:13:16'),
-(4, 'nuevo', NULL, 'efectivo', 2, 720, '2020-07-21 21:14:31');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `pedidos_productos`
---
-
-CREATE TABLE `pedidos_productos` (
-  `id` int(11) NOT NULL,
-  `pedido_id` int(11) DEFAULT NULL,
-  `producto_id` int(11) DEFAULT NULL,
-  `cantidad` int(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `pedidos_productos`
---
-
-INSERT INTO `pedidos_productos` (`id`, `pedido_id`, `producto_id`, `cantidad`) VALUES
-(311, 3, 1, 1),
-(312, 3, 2, 1),
-(313, 3, 3, 1),
-(314, 4, 1, 1),
-(315, 4, 3, 1),
-(316, 4, 3, 1);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `productos`
---
-
-CREATE TABLE `productos` (
-  `id` int(11) NOT NULL,
-  `nombre_plato` varchar(255) DEFAULT NULL,
-  `detalle` varchar(255) DEFAULT NULL,
-  `foto` varchar(255) DEFAULT NULL,
-  `precio` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `productos`
---
-
-INSERT INTO `productos` (`id`, `nombre_plato`, `detalle`, `foto`, `precio`) VALUES
-(1, 'Sandwich veggie', 'Sandwich de salmon con pan de harina de almendras.', 'https://unsplash.com/photos/ddZYOtZUnBk', 360),
-(2, 'Sandwich de Mila', 'Sandwich de scarne de ternera', 'https://unsplash.com/photos/ddZYOtZUnBk', 350),
-(3, 'Sandwich de Chori', 'Sandwich de chorizo cacero', 'https://unsplash.com/photos/ddZYOtZUnBk', 180);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `usuarios`
---
+DROP TABLE IF EXISTS `usuarios`;
 
 CREATE TABLE `usuarios` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `usuario` varchar(255) DEFAULT NULL,
   `nombre` varchar(255) DEFAULT NULL,
   `apellido` varchar(255) DEFAULT NULL,
@@ -102,91 +24,104 @@ CREATE TABLE `usuarios` (
   `direccion` varchar(255) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
   `isActive` tinyint(1) DEFAULT '1',
-  `isAdmin` tinyint(1) DEFAULT '0'
+  `isAdmin` tinyint(1) DEFAULT '0',
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `usuarios`
---
+LOCK TABLES `usuarios` WRITE;
+/*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
 
-INSERT INTO `usuarios` (`id`, `usuario`, `nombre`, `apellido`, `email`, `telefono`, `direccion`, `password`, `isActive`, `isAdmin`) VALUES
-(1, 'mcanzani', 'matias', 'canzani', 'test@test.com', 121212, 'ciudad de la paz 151', '$2b$10$zqdp20LMN/jWhWMNZWqvuul3X8gwbIp8KubzhQ2wWf4WMkNN5yDLG', 1, 1),
-(2, 'pmarini', 'pedro', 'marini', 'test@test.com', 121212, 'acacerca 222', '$2b$10$amLqsA6PqVn8.xaNMNBDxel3hdhj0exTxTWqd2/ob1JyqKG2ZGa.C', 1, 0),
-(3, 'vborzori', 'valeria', 'brozori', 'test@2test.com', 121212, 'mascerca 111', '$2b$10$t2/2x7nnPjCS5Gu/Okxhr.md1CQg67LkVDOoNnbpVV/FJ89GciT6u', 1, 0);
+INSERT INTO `usuarios` (`id`, `usuario`, `nombre`, `apellido`, `email`, `telefono`, `direccion`, `password`, `isActive`, `isAdmin`)
+VALUES
+	(1,'mcanzani','matias','canzani','test@test.com',121212,'ciudad de la paz 151','$2b$10$mkhueQIylXKna.VyYGXJ/.9PDkfcMQuB1XQti8dl7E/D5M9J0gyN6',1,1),
+	(2,'pmarini','pedro','marini','test@test.com',121212,'acacerca 123','$2b$10$o3a5RPf7iMY.s3iBGAi.j.F/OdNPPbdgZv.ZU2Z1RV003Us2ONAqG',1,0),
+	(3,'vborzori','valeria','borzori','test@test.com',1212121,'muy cerca 223','$2b$10$j2rsl8HLGU5CX8FnvxWNIuzKecTWegI20hvnpDnlB3z.NFUnWRipK',1,0);
 
---
--- Indexes for dumped tables
---
+/*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
+UNLOCK TABLES;
 
---
--- Indexes for table `pedidos`
---
-ALTER TABLE `pedidos`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `usuario_id` (`usuario_id`),
-  ADD KEY `descripcion` (`descripcion`);
+# ------------------------------------------------------------
+# Volcado de tabla productos
+DROP TABLE IF EXISTS `productos`;
 
---
--- Indexes for table `pedidos_productos`
---
-ALTER TABLE `pedidos_productos`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `pedido_id` (`pedido_id`),
-  ADD KEY `producto_id` (`producto_id`);
+CREATE TABLE `productos` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre_plato` varchar(255) DEFAULT NULL,
+  `detalle` varchar(255) DEFAULT NULL,
+  `foto` varchar(255) DEFAULT NULL,
+  `precio` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Indexes for table `productos`
---
-ALTER TABLE `productos`
-  ADD PRIMARY KEY (`id`);
+LOCK TABLES `productos` WRITE;
+/*!40000 ALTER TABLE `productos` DISABLE KEYS */;
 
---
--- Indexes for table `usuarios`
---
-ALTER TABLE `usuarios`
-  ADD PRIMARY KEY (`id`);
+INSERT INTO `productos` (`id`, `nombre_plato`, `detalle`, `foto`, `precio`)
+VALUES
+	(1,'Mila con pure','Milanesa de ternera con pure de papas','https://loremflickr.com/320/240/food',380),
+	(2,'Fideos con crema','Tallarines caseros con crema de leche','https://loremflickr.com/320/240/food',250);
 
---
--- AUTO_INCREMENT for dumped tables
---
+/*!40000 ALTER TABLE `productos` ENABLE KEYS */;
+UNLOCK TABLES;
 
---
--- AUTO_INCREMENT for table `pedidos`
---
-ALTER TABLE `pedidos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+# ------------------------------------------------------------
 
---
--- AUTO_INCREMENT for table `pedidos_productos`
---
-ALTER TABLE `pedidos_productos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=317;
+\
+# Volcado de tabla pedidos_productos
 
---
--- AUTO_INCREMENT for table `productos`
---
-ALTER TABLE `productos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+DROP TABLE IF EXISTS `pedidos_productos`;
 
---
--- AUTO_INCREMENT for table `usuarios`
---
-ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+CREATE TABLE `pedidos_productos` (
+  `id` int(2) NOT NULL AUTO_INCREMENT,
+  `pedido_id` int(2) DEFAULT NULL,
+  `producto_id` int(2) DEFAULT NULL,
+  `cantidad` int(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `pedido_id` (`pedido_id`),
+  KEY `producto_id` (`producto_id`),
+  CONSTRAINT `pedidos_productos_ibfk_1` FOREIGN KEY (`pedido_id`) REFERENCES `pedidos` (`id`),
+  CONSTRAINT `pedidos_productos_ibfk_2` FOREIGN KEY (`producto_id`) REFERENCES `productos` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Constraints for dumped tables
---
+LOCK TABLES `pedidos_productos` WRITE;
+/*!40000 ALTER TABLE `pedidos_productos` DISABLE KEYS */;
 
---
--- Constraints for table `pedidos`
---
-ALTER TABLE `pedidos`
-  ADD CONSTRAINT `pedidos_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`);
+INSERT INTO `pedidos_productos` (`id`, `pedido_id`, `producto_id`, `cantidad`)
+VALUES
+	(1,1,1,1);
 
---
--- Constraints for table `pedidos_productos`
---
-ALTER TABLE `pedidos_productos`
-  ADD CONSTRAINT `pedidos_productos_ibfk_1` FOREIGN KEY (`pedido_id`) REFERENCES `pedidos` (`id`),
-  ADD CONSTRAINT `pedidos_productos_ibfk_2` FOREIGN KEY (`producto_id`) REFERENCES `productos` (`id`);
+/*!40000 ALTER TABLE `pedidos_productos` ENABLE KEYS */;
+UNLOCK TABLES;
+
+# ------------------------------------------------------------
+
+# Volcado de tabla pedidos
+
+DROP TABLE IF EXISTS `pedidos`;
+
+CREATE TABLE `pedidos` (
+  `id` int(2) NOT NULL AUTO_INCREMENT,
+  `status` enum('nuevo','confirmado','preparando','enviado','entregado') DEFAULT 'nuevo',
+  `descripcion` varchar(256) DEFAULT NULL,
+  `forma_de_pago` varchar(255) DEFAULT NULL,
+  `usuario_id` int(2) DEFAULT NULL,
+  `total` int(2) DEFAULT NULL,
+  `fecha_pedido` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `usuario_id` (`usuario_id`),
+  KEY `descripcion` (`descripcion`(255)),
+  CONSTRAINT `pedidos_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+LOCK TABLES `pedidos` WRITE;
+/*!40000 ALTER TABLE `pedidos` DISABLE KEYS */;
+
+INSERT INTO `pedidos` (`id`, `status`, `descripcion`, `forma_de_pago`, `usuario_id`, `total`, `fecha_pedido`)
+VALUES
+	(1,'confirmado',NULL,NULL,1,380,'2020-07-20 21:54:20'),
+	(2,'nuevo',NULL,NULL,1,NULL,'2020-07-21 18:06:23');
+
+/*!40000 ALTER TABLE `pedidos` ENABLE KEYS */;
+UNLOCK TABLES;
+
+# ------------------------------------------------------------

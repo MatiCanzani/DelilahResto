@@ -151,7 +151,12 @@ const deleteOrderById = async (id) => {
             ' DELETE FROM pedidos_productos WHERE pedido_id = ?',
             {
                 replacements: [id],
-            })
+            });
+            const orderClear = await sequelize.query(
+                ' DELETE FROM pedidos WHERE id = ?',
+                {
+                    replacements: [id],
+                });
         return orderDeleted;
     } catch (err) {
         'no se puede eliminar la orden de la base de datos'
